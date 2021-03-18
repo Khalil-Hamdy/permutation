@@ -1,32 +1,54 @@
-# Prerequisites
-*.d
+#include <iostream>
+#include<algorithm>
+#include<string>
+using namespace std;
+int fact(int n)
+{
+    if(n<2)
+        return 1;
+    return n*fact(n-1);
+}
+bool cmp(char a,char b)
+{
+    if(isalpha(a) && isalpha(b))
+    {
+        return a-'0' < b-'0';
+    }
+    return a<b;
+}
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+void permutation(string s)
+{
+    sort(s.begin(),s.end(),cmp);
+    int last,blast;
+    for(int i=0; i<s.length(); i++)
+        cout<<s[i]<<" ";
+    cout<<endl;
+    for(int i=2; i<=fact(s.length()); i++)
+    {
+        last=s.length()-1;
+        blast=s.length()-2;
+        while((s[blast]>s[last])&&blast>=0)
+        {
+            last--;
+            blast--;
+        }
+        last=s.length()-1;
+        while(s[blast]>s[last])
+            last--;
+        swap(s[last],s[blast]);
+        blast++;
+        sort(s.begin()+blast,s.end(),cmp);
+        for(int j=0; j<s.length(); j++)
+            cout<<s[j]<<" ";
+        cout<<endl;
+    }
+}
+int main()
+{
+    string s;
+    cout<<"Enter your element: ";
+    cin>>s;
+    permutation(s);
+    return 0;
+}
